@@ -5,6 +5,7 @@ import Loader from '../components/loader';
 import Layout from '../Layout'
 import axios from 'axios'
 import { baseURL } from '../api'
+import DefaultButton from '../components/defaultButton';
 
 function AddOrganizationScreen() {
 
@@ -169,13 +170,9 @@ function AddOrganizationScreen() {
                         />
                     )
                 }
-
-
             </div>
-
             <div>
-                {/* Shu yerga combobox qo'yish kerak combobox uchun data bu yerdan baseURL/profile/?is_active=true&is_selected=false&is_super_admin= */}
-
+                <DefaultButton className={'mt-5'} label={"Muassasa qo'shish"} />
             </div>
 
         </div >

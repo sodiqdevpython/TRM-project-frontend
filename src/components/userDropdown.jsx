@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FiUser, FiSettings, FiPower } from 'react-icons/fi';
+import { FiUser, FiPower } from 'react-icons/fi';
 import { defaultUser } from '../assets/idex';
 
 const UserDropdown = () => {
@@ -36,14 +36,14 @@ const UserDropdown = () => {
                         Mening profilim
                     </button>
                     <div className="dropdown-divider border-t border-gray-200 my-2"></div>
-                    <button
+                    {/* <button
                         className="dropdown-item flex items-center p-2 text-gray-700 hover:bg-gray-100 transition-colors duration-200 w-full text-left"
                         onClick={() => console.log('Sozlamalari clicked')}
                     >
                         <FiSettings className="svg-icon mr-2 ml-1" />
                         Sozlamalari
                     </button>
-                    <div className="dropdown-divider border-t border-gray-200 my-2"></div>
+                    <div className="dropdown-divider border-t border-gray-200 my-2"></div> */}
                     <button
                         className="dropdown-item flex items-center p-2 text-gray-700 hover:bg-gray-100 transition-colors duration-200 w-full text-left"
                         onClick={() => console.log('Chiqish clicked')}
