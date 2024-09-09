@@ -58,8 +58,8 @@ export default function Layout({ content: Content }) {
                             </Link>
                         </div>
                         <div className='w-[95%] rounded-r-full hover:shadow-2xl transition-all duration-300'>
-                            <Link to={'/add-organization'}>
-                                <SidebarItem icon={MdAddHomeWork} text="Muassasa qo'shish" isActive={pathname === '/add-organization'} />
+                            <Link to={'/organizations-list'}>
+                                <SidebarItem icon={MdAddHomeWork} text="Muassasalar" isActive={pathname === '/organizations-list'} />
                             </Link>
                         </div>
                         <p className='ms-[12%] mt-[5%] text-xl'>Maktablar</p>

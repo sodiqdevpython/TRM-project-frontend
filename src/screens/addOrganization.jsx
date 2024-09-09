@@ -27,9 +27,32 @@ function AddOrganizationScreen() {
 
     const [placeLocation, setPlaceLocation] = useState(-1)
 
-    const [placeList, setPlaceList] = useState([
+    const [placeList, setPlaceList] = useState([])
 
-    ])
+    const [organizationNumber, setOrganizationNumber] = useState('')
+
+    const [fullName, setFullName] = useState('')
+
+    const [organizationEduType, setOrganizationEduType] = useState(null);
+
+    const [orgPower, setOrgPower] = useState(0)
+
+    const [orgWeb, setOrgWeb] = useState('')
+
+    const [isInclusive, setIsInclusive] = useState(false)
+
+    const [isCity, setIsCity] = useState(false)
+
+    const [orgLocName, setOrgLocName] = useState(null)
+
+    const [admin, setAdmin] = useState(null)
+
+
+    function handleInclusive(val) {
+        if (val === '2') {
+            setIsInclusive(true)
+        }
+    }
 
     // Viloyat tanlanishi
     function selectedRegion(regionId) {
@@ -38,7 +61,11 @@ function AddOrganizationScreen() {
 
     // Muassasa joylashuvi tanlanishi
     function selectedLocation(locationId) {
-        setPlaceLocation(parseInt(locationId))
+        const val = parseInt(locationId)
+        setPlaceLocation(val)
+        if (val === "1") {
+            setIsCity(true)
+        }
     }
 
     async function getRegions() {
@@ -75,27 +102,87 @@ function AddOrganizationScreen() {
         label: `${profile.first_name} ${profile.last_name} | ${profile.passport_id}`,
     }));
 
+    async function postData(event) {
+        event.preventDefault()
+
+        let form = new FormData()
+
+        form.append('organization_number', organizationNumber)
+        form.append('name', fullName)
+        if (organizationEduType !== null) {
+            if (organizationEduType === "2") {
+                form.append('education_type', "Maktabgacha ta'lim")
+            }
+            else if (organizationEduType === "3") {
+                form.append('education_type', "Umumiy o'rta ta'lim maktablari")
+            }
+            else if (organizationEduType === "4") {
+                form.append('education_type', "Musiqa maktablari")
+            }
+            else if (organizationEduType === "5") {
+                form.append('education_type', "Sport maktablari")
+            }
+
+        }
+        form.append('power', orgPower)
+        if (orgWeb.length > 6) {
+            form.append('vr_mode_url', orgWeb)
+        }
+        form.append('is_inclusive', isInclusive)
+
+        if (isCity) {
+            form.append('city', orgLocName)
+        } else {
+            form.append('district', orgLocName)
+        }
+        if (admin !== null) {
+            form.append('admin', admin)
+        }
+
+        console.log("Form ma'lumotlari:", Array.from(form.entries()));
+
+        console.log(form)
+
+        try {
+            const response = await axios.post(`${baseURL}/organizations/`, form, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+
+            console.log(response.status)
+            console.log(response.data)
+        } catch (e) {
+            console.log("Xato", e)
+        }
+
+    }
+
     return (
         <div className='flex flex-col'>
             <div className='grid grid-cols-1 md:grid-cols-3 gap-4 font-rubik'>
                 <div className='flex flex-col py-2'>
                     <span>Muassasa raqami</span>
                     <input
+                        value={organizationNumber}
                         type="number"
                         placeholder='No'
                         className='p-2 border rounded hover:shadow-2xl transition-all duration-300'
+                        onChange={(e) => setOrganizationNumber(e.target.value)}
                     />
                 </div>
                 <div className='flex flex-col py-2'>
                     <span>To'liq nomi</span>
                     <input
+                        value={fullName}
                         type="text"
                         className='p-2 border rounded hover:shadow-2xl transition-all duration-300'
+                        onChange={(e) => setFullName(e.target.value)}
                     />
                 </div>
                 <div className='flex flex-col py-2'>
                     <span>Ta'lim turi</span>
-                    <select className='p-2 border shadow hover:shadow-2xl transition-all duration-300'>
+                    <select onChange={(e) => setOrganizationEduType(e.target.value)} className='p-2 border shadow hover:shadow-2xl transition-all duration-300'>
                         <option value="1">Tanlang</option>
                         <option value="2">Maktabgacha ta'lim</option>
                         <option value="3">Umumiy o'rta ta'lim maktablari</option>
@@ -107,22 +194,26 @@ function AddOrganizationScreen() {
                 <div className='flex flex-col py-2'>
                     <span>Quvvati</span>
                     <input
+                        value={orgPower}
                         type="number"
                         className='p-2 border shadow hover:shadow-2xl transition-all duration-300'
+                        onChange={(e) => setOrgPower(e.target.value)}
                     />
                 </div>
 
                 <div className='flex flex-col py-2'>
-                    <span>URL</span>
+                    <span>Muassasa web sahifasi</span>
                     <input
+                        value={orgWeb}
                         type="url"
                         className='p-2 border shadow hover:shadow-2xl transition-all duration-300'
+                        onChange={(e) => setOrgWeb(e.target.value)}
                     />
                 </div>
 
                 <div className='flex flex-col py-2'>
                     <span>Inklyuzivligi</span>
-                    <select className='p-2 border shadow hover:shadow-2xl transition-all duration-300'>
+                    <select onChange={(val) => handleInclusive(val.target.value)} className='p-2 border shadow hover:shadow-2xl transition-all duration-300'>
                         <option value="1">Tanlang</option>
                         <option value="2">Inklyuziv</option>
                         <option value="3">Inklyuziv emas</option>
@@ -149,7 +240,7 @@ function AddOrganizationScreen() {
 
                 <div className='flex flex-col py-2'>
                     <span>Tuman/Shahar nomi</span>
-                    <select className='p-2 border shadow hover:shadow-2xl transition-all duration-300'>
+                    <select onChange={(e) => setOrgLocName(e.target.value)} className='p-2 border shadow hover:shadow-2xl transition-all duration-300'>
                         {placeList.map((item) => (
                             <option key={item.id} value={item.id}>{item.name}</option>
                         ))}
@@ -166,13 +257,14 @@ function AddOrganizationScreen() {
                         <Select
                             options={profileOptions}
                             placeholder="Tanlang"
-                            classNamePrefix="react-select"  // Optional for custom styling
+                            classNamePrefix="react-select"
+                            onChange={(selectedOption) => setAdmin(selectedOption.value)}
                         />
                     )
                 }
             </div>
             <div>
-                <DefaultButton className={'mt-5'} label={"Muassasa qo'shish"} />
+                <DefaultButton onClick={postData} className={'mt-5'} label={"Muassasa qo'shish"} />
             </div>
 
         </div >

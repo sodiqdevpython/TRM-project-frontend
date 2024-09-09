@@ -29,7 +29,7 @@ function UsersListScreen() {
     useEffect(() => {
 
         async function getProfiles() {
-            const response = await axios.get(`${baseURL}/profile/?is_active=&is_selected=&is_super_admin=true`)
+            const response = await axios.get(`${baseURL}/profile/?is_active=&is_selected=&is_super_admin=false`)
             setTableData(response.data)
             console.log(response.data)
             setProfilesReady(true)
