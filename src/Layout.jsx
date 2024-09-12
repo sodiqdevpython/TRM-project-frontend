@@ -112,7 +112,7 @@ export default function Layout({ content: Content }) {
                 </nav>
 
                 {/* Main Content */}
-                <main className='p-6'>
+                <main className='p-6 overflow-x-auto'>
                     <Content />
                 </main>
 

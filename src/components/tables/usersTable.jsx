@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 export default function UsersTable({ fields, tableData }) {
     return (
         <div className="overflow-x-auto rounded-2xl">
-            <table className="min-w-full divide-y divide-gray-200">
+            <table className="min-w-full divide-y divide-gray-200 overflow-x-auto">
                 <thead className="bg-gray-50">
                     <tr>
                         {fields.map((item, index) => (
