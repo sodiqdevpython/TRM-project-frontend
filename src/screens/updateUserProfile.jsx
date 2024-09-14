@@ -1,24 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import Layout from '../Layout'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import axios from 'axios'
 import { baseURL } from '../api'
 import Loader from '../components/loader'
 import { profile } from '../assets/idex'
-import DefaultButton from '../components/defaultButton'
-import { FaUserEdit } from "react-icons/fa"
 
-function UserProfileDetailScreen() {
+function UpdateUserProfileScreen() {
 
     const { id } = useParams()
-    const navigate = useNavigate()
 
     const [profileInfo, setProfileInfo] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
-
-    function handleNavigate() {
-        navigate(`/user/${id}/edit`)
-    }
 
     useEffect(() => {
 
@@ -30,7 +23,6 @@ function UserProfileDetailScreen() {
         getProfileInfo(id)
     }, [id])
 
-
     return (
         <div>
             {isLoading ? (
@@ -38,7 +30,7 @@ function UserProfileDetailScreen() {
             ) : (
                 <div className='flex flex-col'>
                     <div className='flex flex-row p-2 mt-20 gap-x-10'>
-                        <div className='flex flex-col w-1/4 shadow-lg rounded-xl border bg-[#e1e8ee] hover:shadow-2xl transition-all duration-700'>
+                        <div className='flex flex-col w-1/4 shadow-lg rounded-xl border bg-[#e1e8ee] hover:shadow-xl transition-all duration-700'>
                             <img className='rounded-xl h-[80%]' src={profile} alt="Profil rasmi topilmadi..." />
                             <div className='font-rubik text-xl text-[#696969]'>
                                 <h1 className='text-center'>{profileInfo.first_name} {profileInfo.last_name}</h1>
@@ -70,7 +62,6 @@ function UserProfileDetailScreen() {
                             </div>
                         </div>
                     </div>
-                    <DefaultButton onClick={handleNavigate} icon={<FaUserEdit size={24} />} className={'mt-5 ms-2'} label={'Tahrirlash'} />
                     <div></div>
                 </div>
             )}
@@ -79,6 +70,6 @@ function UserProfileDetailScreen() {
 }
 
 
-export default function UserProfileDetail() {
-    return <Layout content={UserProfileDetailScreen} />
+export default function UpdateUserProfile() {
+    return <Layout content={UpdateUserProfileScreen} />
 }

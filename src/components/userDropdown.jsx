@@ -1,13 +1,22 @@
 import React, { useState } from 'react';
 import { FiUser, FiPower } from 'react-icons/fi';
 import { defaultUser } from '../assets/idex';
+import { useNavigate } from 'react-router-dom';
 
 const UserDropdown = () => {
     const [isOpen, setIsOpen] = useState(false);
 
+    const navigate = useNavigate()
+
     const toggleDropdown = () => {
         setIsOpen(!isOpen);
     };
+
+    function handleLogout() {
+        localStorage.removeItem('token')
+        navigate('/login')
+    }
+
 
     return (
         <div className="relative nav-item dropdown hidden md:block ms-2">
@@ -46,7 +55,7 @@ const UserDropdown = () => {
                     <div className="dropdown-divider border-t border-gray-200 my-2"></div> */}
                     <button
                         className="dropdown-item flex items-center p-2 text-gray-700 hover:bg-gray-100 transition-colors duration-200 w-full text-left"
-                        onClick={() => console.log('Chiqish clicked')}
+                        onClick={handleLogout}
                     >
                         <FiPower className="svg-icon mr-2 ml-1" />
                         Chiqish

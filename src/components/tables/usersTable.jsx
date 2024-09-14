@@ -16,7 +16,7 @@ export default function UsersTable({ fields, tableData }) {
                         <tr key={index}>
                             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{index + 1}</td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                <Link className="text-blue-600 hover:underline">{item.first_name} {item.last_name}</Link>
+                                <Link to={`/user/${item.id}`} className="text-blue-600 hover:underline">{item.first_name} {item.last_name}</Link>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                 <p className="text-blue-600">+998 {item.tel_number.slice(0, 2) + " " + item.tel_number.slice(2, 5) + " " + item.tel_number.slice(5, 7) + " " + item.tel_number.slice(7, 9)} </p>
