@@ -1,24 +1,29 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
-import Search from '../components/search'
-import LanguageSelect from '../components/languageSelect'
-import NotificationsDropdown from '../components/notificationsDropdown'
-import SidebarItem from '../components/sidebarItem'
-import UserDropdown from '../components/userDropdown'
-import SimpleCard from '../components/simpleCard'
+import { baseURL } from '../api'
+import axios from 'axios'
 
 export default function Test() {
-    return (
-        <div className='p-20 bg-slate-500'>
-            <Search />
-            <LanguageSelect />
-            <NotificationsDropdown />
-            <div className='w-64'>
-                <SidebarItem text={'home'} isActive={true} />
-                <UserDropdown />
-            </div>
-            <SimpleCard />
 
+    useEffect(() => {
+        async function api() {
+
+            const token = localStorage.getItem('token')
+
+            const response = await axios.get(`${baseURL}/test/`, {
+                headers: {
+                    'Authorization': `Token ${token}`
+                }
+            })
+            console.log(response)
+        }
+
+        api()
+    }, [])
+
+    return (
+        <div>
+            <h1>Test</h1>
         </div>
     )
 }
